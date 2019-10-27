@@ -10,7 +10,11 @@ public class GameControl : MonoBehaviour
     [SerializeField]
     private float spawnMargin = 20;
     [SerializeField]
-    private GameObject block;
+    private GameObject fence1;
+    [SerializeField]
+    private GameObject fence2;
+    [SerializeField]
+    private GameObject fence3;
 
     // Start is called before the first frame update
     void Start()
@@ -26,10 +30,7 @@ public class GameControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SpawnBlock();
-        }
+
     }
 
     // Call to spawn a block in random location
@@ -38,7 +39,21 @@ public class GameControl : MonoBehaviour
         Vector3 pos = GetRandomLocation();
         Vector3 upward = pos - sphereCenter.position;
         Vector3 forward = Quaternion.AngleAxis(Random.Range(0, 360), upward) * upward;
-        GameObject newBlock = Instantiate(block, pos, Quaternion.LookRotation(forward, upward));
+        int which = Random.Range(1, 4);
+        GameObject newBlock = null;
+        switch (which)
+        {
+            case 1:
+                newBlock = Instantiate(fence1, pos, Quaternion.LookRotation(forward, upward));
+                break;
+            case 2:
+                newBlock = Instantiate(fence2, pos, Quaternion.LookRotation(forward, upward));
+                break;
+            case 3:
+                newBlock = Instantiate(fence3, pos, Quaternion.LookRotation(forward, upward));
+                break;
+        }
+        
         myBlocks.Add(newBlock.transform);
     }
 
@@ -49,7 +64,7 @@ public class GameControl : MonoBehaviour
         while(!valid)
         {
             randV = sphereCenter.position;
-            randV += Random.onUnitSphere * sphereCenter.localScale.x / 2;
+            randV += Random.onUnitSphere * (sphereCenter.localScale.x / 2 - 0.3f);
             valid = true;
             foreach (Transform obj in myBlocks)
             {
@@ -62,6 +77,11 @@ public class GameControl : MonoBehaviour
         }
 
         return randV;
+    }
+
+    public void DestroyBlock(Transform block)
+    {
+        myBlocks.Remove(block);
     }
 
     public void ScorePoint()
