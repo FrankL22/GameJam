@@ -13,7 +13,8 @@ public class BulletRotater : MonoBehaviour
 	// Update is called once per frame
     void Start()
 	{
-		rand = new System.Random();
+        Planet = GameObject.Find("Sphere").GetComponent<Transform>();
+        rand = new System.Random();
 
 	}
 
@@ -27,7 +28,7 @@ public class BulletRotater : MonoBehaviour
 	private void OnCollisionEnter(UnityEngine.Collision collision)
 	{
 		Debug.Log("********************");
-		if (collision.gameObject.CompareTag("Block"))
+		if (collision.gameObject.CompareTag("block"))
 		{
 			//other.gameObject.SetActive(false);
 			//transform.Rotate(0, 0, -rand.Next(0, 90), Space.Self);
@@ -48,6 +49,8 @@ public class BulletRotater : MonoBehaviour
 
 			Quaternion rotation = Quaternion.FromToRotation(Vector3.forward, res);
 			transform.rotation = rotation;
+
+            collision.gameObject.SetActive(false);
 
 		}
 		if (collision.gameObject.CompareTag("Player"))
