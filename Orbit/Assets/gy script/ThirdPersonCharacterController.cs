@@ -13,15 +13,14 @@ public class ThirdPersonCharacterController : NetworkBehaviour
 
     private void Start()
     {
+        if (isLocalPlayer)
+        {
+            GameObject.Find("Camera").GetComponent<CameraFollow>().target = gameObject.transform;
+        }
     }
     public override void OnStartLocalPlayer()
     {
-        //取消对方的摄像机
-        if (!isLocalPlayer)
-        {
-            GameObject.Find("Main Camera").SetActive(false);
-        }
-
+       
         //设置己方颜色
         MeshRenderer temp = GetComponent<MeshRenderer>();
         temp.material.color = Color.red;

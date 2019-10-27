@@ -56,7 +56,7 @@ public class BulletRotater : NetworkBehaviour
 		}
 		if (collision.gameObject.CompareTag("Player"))
 		{
-			collision.gameObject.SetActive(false);
+			collision.gameObject.transform.position = GameObject.Find("position").transform.position;
 		}
 	}
     
