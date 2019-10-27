@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class BulletRotater : MonoBehaviour
+public class BulletRotater : NetworkBehaviour
 {
 	public Transform Planet;
 	public float rotateSpeed = 10f;
@@ -55,7 +56,7 @@ public class BulletRotater : MonoBehaviour
 		}
 		if (collision.gameObject.CompareTag("Player"))
 		{
-			gameObject.SetActive(false);
+			collision.gameObject.SetActive(false);
 		}
 	}
     

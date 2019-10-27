@@ -1,20 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Shoot : MonoBehaviour
+public class Shoot : NetworkBehaviour
 {
-    public Rigidbody Bullet;
+    public GameObject Bullet;
 	public Transform ShootPoint;
     
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && isLocalPlayer)
 		{
-			Rigidbody clone;
-			clone = (Rigidbody) Instantiate(Bullet, ShootPoint.position, ShootPoint.rotation);
+            CmdShoot();
 		}
+    }
+
+    [Command]
+    void CmdShoot()
+    {
+        GameObject bullet = Instantiate(Bullet, ShootPoint.position, ShootPoint.rotation);
+        NetworkServer.Spawn(bullet);
     }
 }

@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class BlockBehavior : MonoBehaviour
+public class BlockBehavior : NetworkBehaviour
 {
     private Rigidbody rigid;
     private GameControl game;
@@ -20,6 +21,7 @@ public class BlockBehavior : MonoBehaviour
         gameObject.tag = "block";
         game = GameObject.FindObjectOfType<GameControl>();
         GameObject smoke = Instantiate(smokeParticle, transform.position, transform.rotation);
+        NetworkServer.Spawn(smoke);
         Destroy(smoke, 2.0f);
         Destroy(gameObject, destroyTime);
     }

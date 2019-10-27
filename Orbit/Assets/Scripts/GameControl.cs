@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class GameControl : MonoBehaviour
+public class GameControl : NetworkBehaviour
 {
     private Transform sphereCenter;
     private List<Transform> myBlocks;
@@ -53,7 +54,7 @@ public class GameControl : MonoBehaviour
                 newBlock = Instantiate(fence3, pos, Quaternion.LookRotation(forward, upward));
                 break;
         }
-        
+        NetworkServer.Spawn(newBlock);
         myBlocks.Add(newBlock.transform);
     }
 

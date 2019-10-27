@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 [RequireComponent(typeof(Rigidbody))]
-public class ThirdPersonCameraController : MonoBehaviour
+public class ThirdPersonCameraController : NetworkBehaviour
 {
     public float RotationSpeed = 1;
     public Transform Target, Player;

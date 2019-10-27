@@ -18,7 +18,7 @@ public class GravityBody : MonoBehaviour
     void FixedUpdate()
     {
         planet.Attract(transform);
-    
+        Debug.Log(transform.position);
     }
 
 }
