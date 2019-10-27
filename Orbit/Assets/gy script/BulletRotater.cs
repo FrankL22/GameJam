@@ -5,18 +5,20 @@ using UnityEngine;
 public class BulletRotater : MonoBehaviour
 {
 	public Transform Planet;
-	public float rotateSpeed = 10f;
+	public float rotateSpeed = 2f;
 	public System.Random rand;
-	
-
+    public GameControl gameControl;
+    public ThirdPersonCharacterController Player;
 
 	// Update is called once per frame
     void Start()
 	{
         Planet = GameObject.Find("Sphere").GetComponent<Transform>();
         rand = new System.Random();
+        gameControl = GameObject.FindObjectOfType<GameControl>();
+        Player = GameObject.FindObjectOfType<ThirdPersonCharacterController>();
 
-	}
+    }
 
 	void FixedUpdate()
     {
@@ -27,7 +29,7 @@ public class BulletRotater : MonoBehaviour
 
 	private void OnCollisionEnter(UnityEngine.Collision collision)
 	{
-		Debug.Log("********************");
+		
 		if (collision.gameObject.CompareTag("block"))
 		{
 			//other.gameObject.SetActive(false);
@@ -51,11 +53,14 @@ public class BulletRotater : MonoBehaviour
 			transform.rotation = rotation;
 
             collision.gameObject.SetActive(false);
+            gameControl.UpdateScore();
 
 		}
 		if (collision.gameObject.CompareTag("Player"))
 		{
-			gameObject.SetActive(false);
+            Debug.Log("been shot");
+            Player.UpdateMove(false);
+            gameObject.SetActive(false);
 		}
 	}
     

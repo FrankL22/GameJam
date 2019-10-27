@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameControl : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class GameControl : MonoBehaviour
     private GameObject fence2;
     [SerializeField]
     private GameObject fence3;
+    
+    public int score;
+    public Text scoreText;
 
     // Start is called before the first frame update
     void Start()
@@ -25,12 +29,21 @@ public class GameControl : MonoBehaviour
         {
             SpawnBlock();
         }
+        score = 0;
+        scoreText.text = "Score: " + score;
+
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    public void UpdateScore()
+    {
+        score++;
+        scoreText.text = "Score: " + score;
     }
 
     // Call to spawn a block in random location

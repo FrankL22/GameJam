@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5489454611504346411}
   - component: {fileID: 5489454611504346410}
   - component: {fileID: 5489454611504346409}
-  - component: {fileID: 5489454611504346408}
+  - component: {fileID: 5875858709319377466}
   - component: {fileID: 5489454611504346413}
   m_Layer: 0
   m_Name: Bullet
@@ -94,7 +94,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5489454611504346408
+--- !u!114 &5875858709319377466
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,6 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Planet: {fileID: 0}
   rotateSpeed: 2
+  gameControl: {fileID: 0}
 --- !u!54 &5489454611504346413
 Rigidbody:
   m_ObjectHideFlags: 0
