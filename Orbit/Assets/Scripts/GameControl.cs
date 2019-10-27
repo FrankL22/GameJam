@@ -15,6 +15,12 @@ public class GameControl : MonoBehaviour
     private GameObject fence2;
     [SerializeField]
     private GameObject fence3;
+    [SerializeField]
+    private GameObject tree1;
+    [SerializeField]
+    private GameObject tree2;
+    [SerializeField]
+    private GameObject rock;
 
     // Start is called before the first frame update
     void Start()
@@ -39,18 +45,33 @@ public class GameControl : MonoBehaviour
         Vector3 pos = GetRandomLocation();
         Vector3 upward = pos - sphereCenter.position;
         Vector3 forward = Quaternion.AngleAxis(Random.Range(0, 360), upward) * upward;
-        int which = Random.Range(1, 4);
+        int which = Random.Range(1, 9);
         GameObject newBlock = null;
         switch (which)
         {
             case 1:
                 newBlock = Instantiate(fence1, pos, Quaternion.LookRotation(forward, upward));
+                newBlock.transform.Rotate(transform.right, 90f);
                 break;
             case 2:
                 newBlock = Instantiate(fence2, pos, Quaternion.LookRotation(forward, upward));
                 break;
             case 3:
                 newBlock = Instantiate(fence3, pos, Quaternion.LookRotation(forward, upward));
+                break;
+            case 4:
+                newBlock = Instantiate(tree1, pos, Quaternion.LookRotation(forward, upward));
+                newBlock.transform.Rotate(transform.right, 90f);
+                break;
+            case 5:
+                newBlock = Instantiate(tree2, pos, Quaternion.LookRotation(forward, upward));
+                newBlock.transform.Rotate(transform.right, 90f);
+                break;
+            case 6:
+            case 7:
+            case 8:
+                newBlock = Instantiate(rock, pos, Quaternion.LookRotation(forward, upward));
+                newBlock.transform.Rotate(transform.right, 90f);
                 break;
         }
         
@@ -92,5 +113,17 @@ public class GameControl : MonoBehaviour
     public int GetPoints()
     {
         return points;
+    }
+
+    private void OnDestroy()
+    {
+        foreach (Transform obj in myBlocks)
+        {
+            if (obj != null)
+            {
+                obj.gameObject.GetComponent<BlockBehavior>().spawnNew = false;
+                Destroy(obj.gameObject);
+            }
+        }
     }
 }
