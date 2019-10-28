@@ -18,7 +18,7 @@ public class Shoot : NetworkBehaviour
 		}
     }
 
-    //[Command]
+    [Command]
     void CmdShoot()
     {
         GameObject bullet = Instantiate(Bullet, ShootPoint.position, ShootPoint.rotation);
