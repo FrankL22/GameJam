@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class GameControl : MonoBehaviour
 {
@@ -22,12 +24,15 @@ public class GameControl : MonoBehaviour
     [SerializeField]
     private GameObject rock;
 
+    public bool isDead = false;
+
+
     // Start is called before the first frame update
     void Start()
     {
         sphereCenter = GameObject.Find("Sphere").GetComponent<Transform>();
         myBlocks = new List<Transform>();
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 15; i++)
         {
             SpawnBlock();
         }
@@ -36,12 +41,27 @@ public class GameControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (isDead)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Respawn();
+            }
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Application.Quit();
+            }
+        }
     }
 
     // Call to spawn a block in random location
     public void SpawnBlock()
     {
+        if(!sphereCenter)
+        {
+            return;
+        }
+
         Vector3 pos = GetRandomLocation();
         Vector3 upward = pos - sphereCenter.position;
         Vector3 forward = Quaternion.AngleAxis(Random.Range(0, 360), upward) * upward;
@@ -103,11 +123,16 @@ public class GameControl : MonoBehaviour
     public void DestroyBlock(Transform block)
     {
         myBlocks.Remove(block);
+        SpawnBlock();
     }
 
     public void ScorePoint()
     {
-        points++;
+        if (!isDead)
+        {
+            points++;
+            GameObject.FindGameObjectWithTag("display").GetComponent<UnityEngine.UI.Text>().text = points.ToString();
+        }
     }
 
     public int GetPoints()
@@ -115,15 +140,8 @@ public class GameControl : MonoBehaviour
         return points;
     }
 
-    private void OnDestroy()
+    private void Respawn()
     {
-        foreach (Transform obj in myBlocks)
-        {
-            if (obj != null)
-            {
-                obj.gameObject.GetComponent<BlockBehavior>().spawnNew = false;
-                Destroy(obj.gameObject);
-            }
-        }
+        SceneManager.LoadScene("Demo");
     }
 }

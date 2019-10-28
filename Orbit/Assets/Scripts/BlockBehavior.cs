@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BlockBehavior : MonoBehaviour
 {
-    public bool spawnNew = true;
     private Rigidbody rigid;
     private GameControl game;
     [SerializeField]
@@ -26,33 +25,15 @@ public class BlockBehavior : MonoBehaviour
             GameObject smoke = Instantiate(smokeParticle, transform.position, transform.rotation);
             Destroy(smoke, 2.0f);
         }
-        Destroy(gameObject, destroyTime);
     }
 
-
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.rigidbody != null && collision.rigidbody.gameObject.CompareTag("bullet"))
-        {
-            hitpoint--;
-        }
-
-        if (hitpoint == 0)
-        {
-            game.ScorePoint();
-            Destroy(gameObject, destroyTime);
-        }
-    }
-
-    private void OnDestroy()
+    public void Hit()
     {
         if (game != null)
         {
             game.DestroyBlock(transform);
-            if (spawnNew)
-            {
-                game.SpawnBlock();
-            }
+            game.ScorePoint();
+            Destroy(gameObject, destroyTime);
         }
     }
 }
